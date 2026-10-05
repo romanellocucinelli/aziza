@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>MARÉ — Where the sea feels like home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F4EBDC;
+            --bg2: #EADDC6;
+            --ink: #1C2B33;
+            --muted: #5B686E;
+            --sea: #0F3B4C;
+            --tide: #2C7A8C;
+            --saffron: #E9A93B;
+            --coral: #E9825A;
+            --oak: #B07C47;
+            --card: #FBF6EC;
+            --line: rgba(28, 43, 51, .15);
+            --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+            --sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0E2530;
+                --bg2: #12303D;
+                --ink: #F1E8D8;
+                --muted: #A9B8BC;
+                --card: #143542;
+                --line: rgba(241, 232, 216, .16)
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #0E2530;
+            --bg2: #12303D;
+            --ink: #F1E8D8;
+            --muted: #A9B8BC;
+            --card: #143542;
+            --line: rgba(241, 232, 216, .16)
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px));
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: var(--bg);
+            color: var(--ink);
+            font: 400 17px/1.65 var(--sans);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden
+        }
+
+        img,
+        svg,
+        canvas {
+            max-width: 100%;
+            display: block
+        }
+
+        a {
+            color: inherit
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+            cursor: pointer
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--saffron);
+            outline-offset: 3px;
+            border-radius: 4px
+        }
+
+        .wrap {
+            width: min(1200px, 100% - 2*clamp(20px, 5vw, 56px));
+            margin-inline: auto
+        }
+
+        section {
+            padding: clamp(72px, 10vw, 140px) 0;
+            position: relative
+        }
+
+        .eyebrow {
+            font-size: 12.5px;
+            letter-spacing: .24em;
+            color: var(--oak);
+            margin: 0 0 18px;
+            font-weight: 500
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--serif);
+            font-weight: 500;
+            line-height: 1.04;
+            margin: 0;
+            letter-spacing: -.01em
+        }
+
+        h2 {
+            font-size: clamp(38px, 5.6vw, 76px);
+            max-width: 15ch
+        }
+
+        .lead {
+            font-size: clamp(17px, 1.5vw, 20px);
+            color: var(--muted);
+            max-width: 52ch;
+            margin: 22px 0 0
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 28px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 13px;
+            letter-spacing: .18em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform .25s, background .25s, color .25s, box-shadow .25s
+        }
+
+        .btn.solid {
+            background: var(--saffron);
+            color: #2A1B06
+        }
+
+        .btn.solid:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px -10px rgba(233, 169, 59, .8)
+        }
+
+        .btn.ghost {
+            border-color: rgba(255, 255, 255, .7);
+            color: #fff
+        }
+
+        .btn.ghost:hover {
+            background: #fff;
+            color: #12303D;
+            transform: translateY(-3px)
+        }
+
+        .btn.line {
+            border-color: var(--line);
+            color: var(--ink)
+        }
+
+        .btn.line:hover {
+            border-color: var(--saffron);
+            background: var(--saffron);
+            color: #2A1B06
+        }
+
+        /* header */
+        header {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 50;
+            padding-top: env(safe-area-inset-top, 0px);
+            transition: background .35s, box-shadow .35s, color .35s;
+            color: #fff
+        }
+
+        header.solid {
+            background: color-mix(in srgb, var(--bg) 92%, transparent);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 1px 0 var(--line);
+            color: var(--ink)
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 30px;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-decoration: none
+        }
+
+        nav ul {
+            display: flex;
+            gap: clamp(16px, 2.4vw, 36px);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center
+        }
+
+        nav a {
+            font-size: 12.5px;
+            letter-spacing: .2em;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 2px;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s
+        }
+
+        nav a:hover::after,
+        nav a.on::after {
+            transform: scaleX(1)
+        }
+
+        nav a.cta {
+            background: var(--saffron);
+            color: #2A1B06;
+            padding: 10px 20px;
+            border-radius: 999px
+        }
+
+        nav a.cta::after {
+            display: none
+        }
+
+        .burger {
+            display: none;
+            background: none;
+            border: 0;
+            width: 44px;
+            height: 44px;
+            position: relative
+        }
+
+        .burger span,
+        .burger span::before,
+        .burger span::after {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: currentColor;
+            position: absolute;
+            left: 10px;
+            transition: transform .3s, top .3s, background .3s
+        }
+
+        .burger span {
+            top: 21px
+        }
+
+        .burger span::before {
+            content: "";
+            top: -7px;
+            left: 0
+        }
+
+        .burger span::after {
+            content: "";
+            top: 7px;
+            left: 0
+        }
+
+        .burger[aria-expanded="true"] span {
+            background: transparent
+        }
+
+        .burger[aria-expanded="true"] span::before {
+            top: 0;
+            transform: rotate(45deg)
+        }
+
+        .burger[aria-expanded="true"] span::after {
+            top: 0;
+            transform: rotate(-45deg)
+        }
+
+        @media (max-width:960px) {
+            .burger {
+                display: block
+            }
+
+            nav {
+                position: fixed;
+                inset: 0;
+                background: var(--sea);
+                color: #F4EBDC;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity .35s;
+                z-index: -1
+            }
+
+            nav.open {
+                opacity: 1;
+                pointer-events: auto
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 22px
+            }
+
+            nav a {
+                font-family: var(--serif);
+                font-size: 34px;
+                letter-spacing: .12em;
+                font-weight: 500
+            }
+
+            nav a.cta {
+                font-size: 20px;
+                letter-spacing: .2em;
+                font-family: var(--sans)
+            }
+
+            header.menu-open {
+                color: #F4EBDC;
+                background: transparent;
+                box-shadow: none;
+                backdrop-filter: none
+            }
+        }
+
+        /* hero */
+        #home {
+            padding: 0;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            align-items: flex-end;
+            color: #fff;
+            overflow: hidden;
+            background: #2F2B5E
+        }
+
+        #heroCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        #home::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(18, 20, 48, .62), rgba(18, 20, 48, .12) 62%), linear-gradient(0deg, rgba(18, 20, 48, .55), transparent 45%);
+            pointer-events: none
+        }
+
+        .hero-in {
+            position: relative;
+            z-index: 2;
+            padding: 130px 0 clamp(70px, 9vh, 110px)
+        }
+
+        .hero-in .eyebrow {
+            color: #F6C27A;
+            opacity: 0;
+            animation: rise .9s .15s forwards
+        }
+
+        .wordmark {
+            font-family: var(--serif);
+            font-size: clamp(20px, 2.2vw, 28px);
+            letter-spacing: .5em;
+            margin: 0 0 14px;
+            font-weight: 500;
+            opacity: 0;
+            animation: rise .9s .3s forwards
+        }
+
+        .hero-in h1 {
+            font-size: clamp(46px, 8.4vw, 128px);
+            max-width: 11ch;
+            opacity: 0;
+            animation: rise 1.1s .45s forwards
+        }
+
+        .hero-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 38px;
+            opacity: 0;
+            animation: rise .9s .8s forwards
+        }
+
+        .scroll {
+            position: absolute;
+            z-index: 2;
+            right: clamp(20px, 5vw, 56px);
+            bottom: clamp(28px, 5vh, 54px);
+            font-size: 11.5px;
+            letter-spacing: .3em;
+            writing-mode: vertical-rl;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #fff;
+            text-decoration: none
+        }
+
+        .scroll i {
+            width: 1px;
+            height: 64px;
+            background: linear-gradient(#fff, transparent);
+            animation: drip 2.2s infinite
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(26px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes drip {
+            0% {
+                transform: scaleY(0);
+                transform-origin: top
+            }
+
+            50% {
+                transform: scaleY(1);
+                transform-origin: top
+            }
+
+            51% {
+                transform-origin: bottom
+            }
+
+            100% {
+                transform: scaleY(0);
+                transform-origin: bottom
+            }
+        }
+
+        /* world */
+        #world {
+            background: var(--bg2)
+        }
+
+        .world-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+            gap: clamp(20px, 3vw, 44px);
+            margin-top: 48px;
+            align-items: start
+        }
+
+        .map {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px -30px rgba(15, 59, 76, .55);
+            background: #2C7A8C
+        }
+
+        .map svg {
+            width: 100%;
+            height: auto
+        }
+
+        .hs {
+            cursor: pointer
+        }
+
+        .hs .pulse {
+            fill: #E9A93B;
+            opacity: .35;
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: pulse 2.4s infinite
+        }
+
+        .hs .dot {
+            fill: #FBF6EC;
+            stroke: #E9A93B;
+            stroke-width: 3;
+            transition: r .25s, fill .25s
+        }
+
+        .hs text.lab {
+            font: 500 15px var(--sans);
+            fill: #fff;
+            paint-order: stroke;
+            stroke: rgba(15, 59, 76, .75);
+            stroke-width: 4px;
+            opacity: 0;
+            transition: opacity .25s;
+            pointer-events: none;
+            letter-spacing: .04em
+        }
+
+        .hs:hover text.lab,
+        .hs:focus-visible text.lab,
+        .hs.on text.lab {
+            opacity: 1
+        }
+
+        .hs:hover .dot,
+        .hs.on .dot {
+            fill: #E9A93B;
+            r: 11
+        }
+
+        .hs:focus-visible {
+            outline: none
+        }
+
+        .hs:focus-visible .dot {
+            stroke: #fff
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(.6);
+                opacity: .55
+            }
+
+            100% {
+                transform: scale(2.2);
+                opacity: 0
+            }
+        }
+
+        .boat {
+            animation: bob 4s ease-in-out infinite
+        }
+
+        .boat:nth-of-type(2n) {
+            animation-delay: -1.6s
+        }
+
+        @keyframes bob {
+            50% {
+                transform: translateY(4px) rotate(2deg)
+            }
+        }
+
+        .foam {
+            stroke-dasharray: 14 12;
+            animation: foam 12s linear infinite
+        }
+
+        @keyframes foam {
+            to {
+                stroke-dashoffset: -260
+            }
+        }
+
+        .place-card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: clamp(24px, 3vw, 36px);
+            border: 1px solid var(--line);
+            min-height: 250px;
+            position: sticky;
+            top: 96px
+        }
+
+        .place-card h3 {
+            font-size: clamp(28px, 3vw, 40px);
+            margin-bottom: 12px
+        }
+
+        .place-card p {
+            color: var(--muted);
+            margin: 0 0 22px
+        }
+
+        .place-card .tag {
+            font-size: 12px;
+            letter-spacing: .2em;
+            color: var(--oak);
+            margin-bottom: 10px;
+            display: block
+        }
+
+        .place-card.swap {
+            animation: swap .45s
+        }
+
+        @keyframes swap {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 22px
+        }
+
+        .chip {
+            border: 1px solid var(--line);
+            background: transparent;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 13px;
+            transition: background .2s, border-color .2s
+        }
+
+        .chip:hover {
+            border-color: var(--saffron)
+        }
+
+        .chip[aria-pressed="true"] {
+            background: var(--saffron);
+            border-color: var(--saffron);
+            color: #2A1B06
+        }
+
+        @media (max-width:900px) {
+            .world-grid {
+                grid-template-columns: 1fr
+            }
+
+            .place-card {
+                position: static
+            }
+        }
+
+        /* restaurant */
+        .rest-art {
+            margin-top: 52px;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px -40px rgba(15, 59, 76, .6);
+            aspect-ratio: 16/8.4;
+            background: #2a2e5a
+        }
+
+        .rest-art svg {
+            width: 100%;
+            height: 100%
+        }
+
+        .win {
+            animation: glow 5s ease-in-out infinite
+        }
+
+        .win:nth-child(2n) {
+            animation-delay: -2s
+        }
+
+        @keyframes glow {
+            50% {
+                opacity: .82
+            }
+        }
+
+        @media (max-width:700px) {
+            .rest-art {
+                aspect-ratio: 4/3.2
+            }
+
+            .rest-art svg {
+                width: 100%;
+                height: 100%
+            }
+        }
+
+        /* menu */
+        .dish {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: clamp(24px, 5vw, 80px);
+            align-items: center;
+            margin-top: clamp(56px, 7vw, 96px)
+        }
+
+        .dish.flip .dish-art {
+            order: 2
+        }
+
+        .dish-art {
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #E7D6B8, #C9AE82);
+            padding: 3%;
+            box-shadow: 0 40px 70px -35px rgba(40, 25, 5, .65);
+            transition: transform .6s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .dish-art:hover {
+            transform: rotate(-4deg) scale(1.03)
+        }
+
+        .dish-art svg {
+            width: 100%;
+            height: 100%
+        }
+
+        .dish h3 {
+            font-size: clamp(40px, 5vw, 64px);
+            margin: 6px 0 8px
+        }
+
+        .price {
+            font-family: var(--serif);
+            font-size: 34px;
+            color: var(--oak);
+            font-weight: 500
+        }
+
+        .dish p {
+            color: var(--muted);
+            max-width: 46ch
+        }
+
+        .tags {
+            font-size: 12px;
+            letter-spacing: .18em;
+            color: var(--ink);
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 18px
+        }
+
+        .steam {
+            animation: steam 4s ease-in-out infinite;
+            transform-box: fill-box
+        }
+
+        .steam:nth-of-type(2) {
+            animation-delay: -1.3s
+        }
+
+        .steam:nth-of-type(3) {
+            animation-delay: -2.6s
+        }
+
+        @keyframes steam {
+            0% {
+                transform: translateY(8px);
+                opacity: 0
+            }
+
+            40% {
+                opacity: .5
+            }
+
+            100% {
+                transform: translateY(-34px);
+                opacity: 0
+            }
+        }
+
+        .mtabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: clamp(64px, 8vw, 110px);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 16px
+        }
+
+        .mtab {
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            padding: 9px 20px;
+            font-size: 13px;
+            letter-spacing: .16em;
+            font-weight: 500;
+            transition: all .25s
+        }
+
+        .mtab:hover {
+            border-color: var(--line)
+        }
+
+        .mtab[aria-selected="true"] {
+            background: var(--sea);
+            color: #F4EBDC
+        }
+
+        .mlist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px clamp(30px, 6vw, 90px);
+            margin-top: 28px
+        }
+
+        .mitem {
+            padding: 16px 0;
+            border-bottom: 1px dashed var(--line)
+        }
+
+        .mitem .row {
+            display: flex;
+            gap: 12px;
+            align-items: baseline
+        }
+
+        .mitem b {
+            font-family: var(--serif);
+            font-size: 24px;
+            font-weight: 600
+        }
+
+        .mitem .dots {
+            flex: 1;
+            border-bottom: 1px dotted var(--muted);
+            opacity: .5;
+            transform: translateY(-5px)
+        }
+
+        .mitem .pr {
+            font-family: var(--serif);
+            font-size: 22px;
+            color: var(--oak)
+        }
+
+        .mitem p {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 15px
+        }
+
+        @media (max-width:860px) {
+            .dish {
+                grid-template-columns: 1fr
+            }
+
+            .dish.flip .dish-art {
+                order: 0
+            }
+
+            .dish-art {
+                max-width: 480px;
+                margin-inline: auto;
+                width: 100%
+            }
+
+            .mlist {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* experiences */
+        #experiences {
+            background: var(--sea);
+            color: #F4EBDC
+        }
+
+        #experiences .eyebrow {
+            color: #F0B96A
+        }
+
+        #experiences .lead {
+            color: #B9CCD1
+        }
+
+        .xgrid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-top: 52px
+        }
+
+        .xcard {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .14);
+            border-radius: 24px;
+            padding: 22px;
+            text-align: left;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: transform .3s, background .3s, border-color .3s;
+            min-height: 290px
+        }
+
+        .xcard:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, .1);
+            border-color: #F0B96A
+        }
+
+        .xcard .ic {
+            aspect-ratio: 4/3;
+            border-radius: 16px;
+            overflow: hidden
+        }
+
+        .xcard .ic svg {
+            width: 100%;
+            height: 100%;
+            transition: transform .6s
+        }
+
+        .xcard:hover .ic svg {
+            transform: scale(1.12)
+        }
+
+        .xcard h3 {
+            font-size: 27px
+        }
+
+        .xcard span {
+            font-size: 14.5px;
+            color: #B9CCD1;
+            line-height: 1.5
+        }
+
+        .xcard em {
+            font-style: normal;
+            font-size: 12px;
+            letter-spacing: .2em;
+            color: #F0B96A;
+            margin-top: auto
+        }
+
+        .xcard[aria-pressed="true"] {
+            background: var(--saffron);
+            color: #2A1B06;
+            border-color: var(--saffron)
+        }
+
+        .xcard[aria-pressed="true"] span {
+            color: #4A3513
+        }
+
+        .xcard[aria-pressed="true"] em {
+            color: #2A1B06
+        }
+
+        @media (max-width:1000px) {
+            .xgrid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width:520px) {
+            .xgrid {
+                grid-template-columns: 1fr
+            }
+
+            .xcard {
+                min-height: 0
+            }
+        }
+
+        /* sunset */
+        #sunset {
+            padding-bottom: clamp(72px, 9vw, 120px)
+        }
+
+        .sun-stage {
+            margin-top: 48px;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16/8.5;
+            box-shadow: 0 40px 80px -40px rgba(15, 20, 48, .7);
+            touch-action: pan-y;
+            cursor: ew-resize;
+            background: #2F2B5E
+        }
+
+        #sunCanvas {
+            width: 100%;
+            height: 100%
+        }
+
+        .sun-badge {
+            position: absolute;
+            left: 20px;
+            top: 18px;
+            background: rgba(15, 20, 40, .45);
+            backdrop-filter: blur(8px);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: .2em
+        }
+
+        .slider {
+            margin-top: 28px
+        }
+
+        .slider input {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #8CC6E4, #F3B98C 55%, #C95A7C 80%, #2F2B5E);
+            outline-offset: 8px
+        }
+
+        .slider input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FFF3C4, #F6B94A);
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 6px rgba(246, 185, 74, .28), 0 6px 14px rgba(0, 0, 0, .3);
+            cursor: grab
+        }
+
+        .slider input::-moz-range-thumb {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FFF3C4, #F6B94A);
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 6px rgba(246, 185, 74, .28)
+        }
+
+        .slider .ends {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            letter-spacing: .24em;
+            color: var(--muted);
+            margin-top: 14px
+        }
+
+        .sun-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 26px
+        }
+
+        /* spaces */
+        #spaces {
+            background: var(--bg2)
+        }
+
+        .sgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-top: 52px
+        }
+
+        .scard {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            overflow: hidden;
+            text-align: left;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            transition: transform .35s, box-shadow .35s, border-color .35s
+        }
+
+        .scard:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 28px 50px -30px rgba(15, 59, 76, .6)
+        }
+
+        .scard .pic {
+            aspect-ratio: 4/3;
+            overflow: hidden
+        }
+
+        .scard .pic svg {
+            width: 100%;
+            height: 100%;
+            transition: transform .7s
+        }
+
+        .scard:hover .pic svg {
+            transform: scale(1.08)
+        }
+
+        .scard .txt {
+            padding: 20px 22px 24px
+        }
+
+        .scard h3 {
+            font-size: 30px;
+            margin-bottom: 6px
+        }
+
+        .scard p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px
+        }
+
+        .scard .pick {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 12px;
+            letter-spacing: .2em;
+            color: var(--oak);
+            font-weight: 500
+        }
+
+        .scard[aria-pressed="true"] {
+            border-color: var(--saffron);
+            box-shadow: 0 0 0 2px var(--saffron)
+        }
+
+        .scard[aria-pressed="true"] .pick {
+            color: var(--ink)
+        }
+
+        @media (max-width:980px) {
+            .sgrid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width:560px) {
+            .sgrid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* story */
+        #story {
+            overflow: hidden
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: clamp(30px, 6vw, 100px);
+            align-items: start
+        }
+
+        .story-grid h2 {
+            max-width: 10ch
+        }
+
+        .big {
+            font-family: var(--serif);
+            font-size: clamp(24px, 2.6vw, 34px);
+            line-height: 1.3;
+            margin: 28px 0 0;
+            max-width: 24ch;
+            font-style: italic;
+            color: var(--oak)
+        }
+
+        .story-body p {
+            margin: 0 0 22px;
+            font-size: 18px
+        }
+
+        .story-body p:first-child {
+            font-family: var(--serif);
+            font-size: clamp(26px, 2.6vw, 34px);
+            line-height: 1.25;
+            color: var(--ink)
+        }
+
+        .sunmark {
+            position: absolute;
+            right: -120px;
+            top: 40px;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(233, 169, 59, .35), transparent 68%);
+            pointer-events: none
+        }
+
+        @media (max-width:860px) {
+            .story-grid {
+                grid-template-columns: 1fr
+            }
+
+            .sunmark {
+                width: 260px;
+                height: 260px;
+                right: -80px
+            }
+        }
+
+        /* reserve */
+        #reserve {
+            background: var(--sea);
+            color: #F4EBDC;
+            overflow: hidden
+        }
+
+        #reserve .eyebrow {
+            color: #F0B96A
+        }
+
+        .rform {
+            margin-top: 46px;
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .16);
+            border-radius: 30px;
+            padding: clamp(24px, 4vw, 48px);
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 22px;
+            backdrop-filter: blur(6px)
+        }
+
+        .f {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            grid-column: span 2
+        }
+
+        .f.w3 {
+            grid-column: span 3
+        }
+
+        .f label {
+            font-size: 12px;
+            letter-spacing: .24em;
+            color: #F0B96A;
+            font-weight: 500
+        }
+
+        .f input,
+        .f select {
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .22);
+            border-radius: 14px;
+            padding: 15px 16px;
+            color: #fff;
+            font: inherit;
+            width: 100%;
+            transition: border-color .2s, background .2s;
+            color-scheme: dark
+        }
+
+        .f select option {
+            color: #12303D;
+            background: #fff
+        }
+
+        .f input::placeholder {
+            color: #9FB6BC
+        }
+
+        .f input:focus,
+        .f select:focus {
+            border-color: #F0B96A;
+            background: rgba(255, 255, 255, .15);
+            outline: none
+        }
+
+        .f .err {
+            color: #FFB59A;
+            font-size: 13px;
+            min-height: 1px
+        }
+
+        .f.bad input,
+        .f.bad select {
+            border-color: #FF8E6B
+        }
+
+        .pre {
+            grid-column: 1/-1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            font-size: 14px;
+            color: #B9CCD1;
+            min-height: 34px
+        }
+
+        .pre .chip {
+            border-color: rgba(255, 255, 255, .3);
+            color: #F4EBDC;
+            display: inline-flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .pre .chip:hover {
+            background: rgba(255, 255, 255, .12)
+        }
+
+        .rform .go {
+            grid-column: 1/-1;
+            justify-self: start
+        }
+
+        .rform .btn.solid {
+            border: 0
+        }
+
+        .done {
+            display: none;
+            margin-top: 46px;
+            background: var(--saffron);
+            color: #2A1B06;
+            border-radius: 30px;
+            padding: clamp(28px, 4vw, 52px)
+        }
+
+        .done.show {
+            display: block;
+            animation: swap .6s
+        }
+
+        .done h3 {
+            font-size: clamp(34px, 4vw, 54px);
+            margin-bottom: 12px
+        }
+
+        .done dl {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 6px 24px;
+            margin: 20px 0 26px
+        }
+
+        .done dt {
+            font-size: 12px;
+            letter-spacing: .22em;
+            font-weight: 500;
+            padding-top: 4px
+        }
+
+        .done dd {
+            margin: 0;
+            font-size: 18px
+        }
+
+        .rform[hidden] {
+            display: none
+        }
+
+        @media (max-width:760px) {
+            .rform {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .f,
+            .f.w3 {
+                grid-column: span 2
+            }
+
+            .f.half {
+                grid-column: span 1
+            }
+        }
+
+        /* contact */
+        #contact {
+            padding-bottom: 40px
+        }
+
+        .cgrid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(24px, 4vw, 56px);
+            margin-top: 50px;
+            border-top: 1px solid var(--line);
+            padding-top: 40px
+        }
+
+        .cgrid h3 {
+            font-size: 30px;
+            margin-bottom: 12px
+        }
+
+        .cgrid p {
+            margin: 0;
+            color: var(--muted)
+        }
+
+        .cgrid a {
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+            transition: border-color .2s, color .2s
+        }
+
+        .cgrid a:hover {
+            border-color: var(--saffron);
+            color: var(--oak)
+        }
+
+        footer {
+            margin-top: clamp(60px, 8vw, 110px);
+            padding: 30px 0 34px;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: .3em;
+            color: var(--muted);
+            border-top: 1px solid var(--line)
+        }
+
+        @media (max-width:900px) {
+            .cgrid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media (max-width:520px) {
+            .cgrid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .toplink {
+            position: fixed;
+            right: 18px;
+            bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+            z-index: 40;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--saffron);
+            color: #2A1B06;
+            border: 0;
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: all .3s;
+            box-shadow: 0 10px 24px -8px rgba(0, 0, 0, .4)
+        }
+
+        .toplink.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: none
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+
+            html {
+                scroll-behavior: auto
+            }
+
+            .hero-in * {
+                opacity: 1 !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="top">
+        <div class="wrap bar">
+            <a class="logo" href="#home" aria-label="MARÉ home">MARÉ</a>
+            <nav id="nav" aria-label="Main">
+                <ul>
+                    <li><a href="#world">WORLD</a></li>
+                    <li><a href="#rest">RESTAURANT</a></li>
+                    <li><a href="#menu">MENU</a></li>
+                    <li><a href="#experiences">EXPERIENCES</a></li>
+                    <li><a href="#spaces">SPACES</a></li>
+                    <li><a href="#story">STORY</a></li>
+                    <li><a class="cta" href="#reserve">RESERVE</a></li>
+                </ul>
+            </nav>
+            <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span></button>
+        </div>
+    </header>
+
+    <main>
+        <!-- 01 -->
+        <section id="home" aria-label="Arrival">
+            <canvas id="heroCanvas" aria-hidden="true"></canvas>
+            <div class="wrap hero-in">
+                <p class="eyebrow">01 — ARRIVAL</p>
+                <p class="wordmark">MARÉ</p>
+                <h1>Where the sea feels like home.</h1>
+                <div class="hero-btns">
+                    <a class="btn solid" href="#world">EXPLORE MARÉ</a>
+                    <a class="btn ghost" href="#menu">VIEW MENU</a>
+                </div>
+            </div>
+            <a class="scroll" href="#world"><i></i>SCROLL TO ENTER</a>
+        </section>
+
+        <!-- 02 -->
+        <section id="world">
+            <div class="wrap">
+                <p class="eyebrow">02 — THE OCEAN</p>
+                <h2>The coast, from above.</h2>
+                <p class="lead">Wander the coast. Tap any place to see what is waiting there.</p>
+                <div class="world-grid">
+                    <div class="map" id="map"></div>
+                    <aside class="place-card" id="placeCard" aria-live="polite"></aside>
+                </div>
+                <div class="chips" id="placeChips" role="group" aria-label="Places on the coast"></div>
+            </div>
+        </section>
+
+        <!-- 03 -->
+        <section id="rest">
+            <div class="wrap">
+                <p class="eyebrow">03 — THE RESTAURANT</p>
+                <h2>Wood, glass and a long view.</h2>
+                <p class="lead">Not a palace. A friendly house on the shore, glowing a little brighter every evening.
+                </p>
+                <div class="rest-art" id="restArt"></div>
+            </div>
+        </section>
+
+        <!-- 04 -->
+        <section id="menu">
+            <div class="wrap">
+                <p class="eyebrow">04 — THE FOOD</p>
+                <h2>Food you actually want to eat.</h2>
+                <p class="lead">Fresh, warm and honest. Cooked slowly, served close to the sea.</p>
+
+                <div class="dish">
+                    <div class="dish-art" id="catchArt"></div>
+                    <div>
+                        <p class="eyebrow">THE MARÉ SIGNATURE</p>
+                        <h3>Maré Catch</h3>
+                        <div class="price">$34</div>
+                        <p>Pan-roasted sea bream on saffron beurre blanc with mussels, charred baby vegetables and
+                            fennel herbs. Every plate carries the MARÉ wave of saffron.</p>
+                        <div class="tags"><span>SEA BREAM</span><span>MUSSELS</span><span>SAFFRON</span><span>BABY
+                                VEGETABLES</span><span>FENNEL</span></div>
+                    </div>
+                </div>
+
+                <div class="dish flip">
+                    <div class="dish-art" id="tideArt"></div>
+                    <div>
+                        <p class="eyebrow">THE MARÉ DESSERT</p>
+                        <h3>Sunset Tide</h3>
+                        <div class="price">$12</div>
+                        <p>Vanilla bean panna cotta with citrus segments, wild berries, a caramel shard and a white
+                            chocolate shell finished with sea salt.</p>
+                        <div class="tags">
+                            <span>VANILLA</span><span>CITRUS</span><span>BERRIES</span><span>CARAMEL</span><span>WHITE
+                                CHOCOLATE</span><span>SEA SALT</span></div>
+                    </div>
+                </div>
+
+                <div class="mtabs" role="tablist" aria-label="Menu categories" id="mtabs"></div>
+                <div class="mlist" id="mlist" role="tabpanel"></div>
+            </div>
+        </section>
+
+        <!-- 05 -->
+        <section id="experiences">
+            <div class="wrap">
+                <p class="eyebrow">05 — THE EXPERIENCES</p>
+                <h2>What you can do here.</h2>
+                <p class="lead">Eight ways to spend a day in the MARÉ world.</p>
+                <div class="xgrid" id="xgrid"></div>
+            </div>
+        </section>
+
+        <!-- 06 -->
+        <section id="sunset">
+            <div class="wrap">
+                <p class="eyebrow">06 — SUNSET</p>
+                <h2>The best table is at golden hour.</h2>
+                <p class="lead">Drag the sun. Watch the windows glow and the boats turn to silhouettes.</p>
+                <div class="sun-stage" id="sunStage">
+                    <canvas id="sunCanvas" aria-hidden="true"></canvas>
+                    <div class="sun-badge" id="sunBadge">GOLDEN HOUR</div>
+                </div>
+                <div class="slider">
+                    <input type="range" id="sunRange" min="0" max="100" value="62"
+                        aria-label="Move the sun from midday to dusk">
+                    <div class="ends"><span>MIDDAY</span><span>DUSK</span></div>
+                </div>
+                <div class="sun-foot">
+                    <p class="lead" style="margin:0" id="sunLine"></p>
+                    <a class="btn solid" href="#reserve">RESERVE A SUNSET TABLE</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 07 -->
+        <section id="spaces">
+            <div class="wrap">
+                <p class="eyebrow">07 — SPACES</p>
+                <h2>Find your corner.</h2>
+                <p class="lead">Six places to sit, and every one of them has the sea in it.</p>
+                <div class="sgrid" id="sgrid"></div>
+            </div>
+        </section>
+
+        <!-- 08 -->
+        <section id="story">
+            <div class="sunmark"></div>
+            <div class="wrap story-grid">
+                <div>
+                    <p class="eyebrow">08 — STORY</p>
+                    <h2>Stay a little longer.</h2>
+                    <p class="big">Slow down. Look at the sea. Eat something delicious. Enjoy the people around you. And
+                        stay a little longer.</p>
+                </div>
+                <div class="story-body">
+                    <p>MARÉ began with a simple feeling: the one you get at the end of a long summer day, when the light
+                        turns soft and nobody wants to leave.</p>
+                    <p>We built a house by the water, with wide windows, a wooden terrace, and a kitchen that cooks the
+                        way family does: generously, and without fuss.</p>
+                    <p>Around it grew a small world of piers and boats, surfers and neighbours. Come hungry. Come with
+                        friends. Leave with a memory.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 09 -->
+        <section id="reserve">
+            <div class="wrap">
+                <p class="eyebrow">09 — RESERVATION</p>
+                <h2>Save your table by the sea.</h2>
+                <form class="rform" id="rform" novalidate>
+                    <div class="f w3"><label for="rDate">DATE</label><input type="date" id="rDate" required><span
+                            class="err" id="eDate"></span></div>
+                    <div class="f half" style="grid-column:span 2"><label for="rTime">TIME</label><select id="rTime"
+                            required></select><span class="err" id="eTime"></span></div>
+                    <div class="f half" style="grid-column:span 1"><label for="rGuests">GUESTS</label><select
+                            id="rGuests"></select></div>
+                    <div class="f w3"><label for="rName">NAME</label><input type="text" id="rName" autocomplete="name"
+                            placeholder="Your name" required><span class="err" id="eName"></span></div>
+                    <div class="f w3"><label for="rContact">CONTACT</label><input type="text" id="rContact"
+                            autocomplete="email" placeholder="Phone or email" required><span class="err"
+                            id="eContact"></span></div>
+                    <div class="pre" id="pre"></div>
+                    <button class="btn solid go" type="submit">RESERVE TABLE</button>
+                </form>
+                <div class="done" id="done" role="status" tabindex="-1">
+                    <h3>Your table is saved.</h3>
+                    <p>We will confirm by message shortly. See you at sunset.</p>
+                    <dl id="doneList"></dl>
+                    <button class="btn line" id="again" style="border-color:rgba(42,27,6,.4);color:#2A1B06"
+                        type="button">MAKE ANOTHER RESERVATION</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10 -->
+        <section id="contact">
+            <div class="wrap">
+                <p class="eyebrow">10 — CONTACT</p>
+                <h2>Come find us.</h2>
+                <div class="cgrid">
+                    <div>
+                        <h3>MARÉ</h3>
+                        <p>Seaside Promenade 12, by the old pier</p>
+                    </div>
+                    <div>
+                        <h3>Opening hours</h3>
+                        <p>Mon–Fri 12:00–23:00 · Sat–Sun brunch from 09:00</p>
+                    </div>
+                    <div>
+                        <h3>Contact</h3>
+                        <p><a href="tel:+000000000000">+000 00 000 0000</a> · <a
+                                href="mailto:hello@mare.example">hello@mare.example</a></p>
+                    </div>
+                    <div>
+                        <h3>Social</h3>
+                        <p><a href="#contact">@mare.seaside</a> · <a href="#contact">@mare.sunsets</a></p>
+                    </div>
+                </div>
+            </div>
+            <footer>MARÉ · SEE YOU AT SUNSET</footer>
+        </section>
+    </main>
+
+    <button class="toplink" id="toplink" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 20 20"
+            fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 12l6-6 6 6" />
+        </svg></button>
+
+    <script>
+        /* ---------- helpers ---------- */
+        const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const mix = (a, b, t) => a + (b - a) * t;
+        const hx = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+        const mc = (a, b, t, al) => { const x = hx(a), y = hx(b); return `rgba(${mix(x[0], y[0], t) | 0},${mix(x[1], y[1], t) | 0},${mix(x[2], y[2], t) | 0},${al ?? 1})` };
+        function pal(keys, p) { // keys: [[pos,[c...]],...]
+            for (let i = 0; i < keys.length - 1; i++) {
+                const [p0, c0] = keys[i], [p1, c1] = keys[i + 1];
+                if (p <= p1) { const t = (p - p0) / (p1 - p0); return c0.map((c, j) => mc(c, c1[j], t)) }
+            }
+            return keys[keys.length - 1][1].map(c => mc(c, c, 0));
+        }
+        const SKY = [[0, ['#4E9BD0', '#8CC6E4', '#E3F1F2']], [.6, ['#6C8FC2', '#F3B98C', '#FFD58A']], [1, ['#2F2B5E', '#C95A7C', '#FF9A5C']]];
+        const SEA = [[0, ['#3E93A8', '#0F4F63']], [.6, ['#D9A07A', '#2B5A6E']], [1, ['#6B4A63', '#141B3A']]];
+
+        /* ---------- ocean / sunset scene ---------- */
+        function drawScene(ctx, w, h, p, t) {
+            const hy = h * .58, sky = pal(SKY, p), sea = pal(SEA, p);
+            let g = ctx.createLinearGradient(0, 0, 0, hy);
+            g.addColorStop(0, sky[0]); g.addColorStop(.55, sky[1]); g.addColorStop(1, sky[2]);
+            ctx.fillStyle = g; ctx.fillRect(0, 0, w, hy + 2);
+            // sun
+            const sx = w * mix(.56, .66, p), sy = mix(hy * .22, hy + 8, Math.pow(p, .85)), r = Math.max(26, w * .034);
+            const sunCol = mc('#FFF6D8', '#FF7A3D', p);
+            let gl = ctx.createRadialGradient(sx, sy, r * .4, sx, sy, r * (6 + p * 6));
+            gl.addColorStop(0, mc('#FFF1B8', '#FF9A5C', p, .75)); gl.addColorStop(1, mc('#FFF1B8', '#FF9A5C', p, 0));
+            ctx.fillStyle = gl; ctx.fillRect(0, 0, w, hy + 2);
+            ctx.beginPath(); ctx.arc(sx, sy, r, 0, 7); ctx.fillStyle = sunCol; ctx.fill();
+            // clouds
+            for (let i = 0; i < 5; i++) {
+                const cx = ((i * .27 + t * .004 * (1 + i * .3)) % 1.4 - .2) * w, cy = hy * (.2 + .13 * i % .6 + .05), cw = w * (.18 + .05 * i);
+                const cg = ctx.createRadialGradient(cx, cy, 2, cx, cy, cw);
+                cg.addColorStop(0, mc('#FFFFFF', '#FFC0A0', p, .55)); cg.addColorStop(1, mc('#FFFFFF', '#FFC0A0', p, 0));
+                ctx.save(); ctx.translate(cx, cy); ctx.scale(1, .16); ctx.translate(-cx, -cy);
+                ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, cw, 0, 7); ctx.fill(); ctx.restore();
+            }
+            // far hills
+            ctx.fillStyle = mc('#7FA9B8', '#2A2447', p, .9); ctx.beginPath(); ctx.moveTo(0, hy);
+            for (let x = 0; x <= w; x += 20)ctx.lineTo(x, hy - (Math.sin(x * .006 + 1) * 8 + Math.sin(x * .013) * 4 + 10) * (x < w * .3 ? 1.6 : .5));
+            ctx.lineTo(w, hy); ctx.fill();
+            // sea
+            g = ctx.createLinearGradient(0, hy, 0, h); g.addColorStop(0, mc('#FFFFFF', '#FFFFFF', 0, 0) && sky[2]); g.addColorStop(.18, sea[0]); g.addColorStop(1, sea[1]);
+            ctx.fillStyle = g; ctx.fillRect(0, hy, w, h - hy);
+            // sun reflection
+            const rows = 46, sunUp = Math.max(0, 1 - Math.max(0, sy - hy) / 60);
+            for (let i = 0; i < rows; i++) {
+                const f = i / rows, y = hy + Math.pow(f, 1.5) * (h - hy);
+                const half = (w * .012 + f * w * .10) * (.6 + p * .6);
+                const n = 14;
+                for (let k = -n; k <= n; k++) {
+                    const off = k / n, wob = Math.sin(t * 1.4 + i * .9 + k * 1.7) * (4 + f * 14);
+                    const x = sx + off * half + wob, len = (10 + f * 34) * (1 - Math.abs(off) * .6) * (.5 + .5 * Math.sin(t * 2 + i * 3 + k));
+                    const a = (1 - Math.abs(off)) * (1 - f * .55) * .55 * sunUp;
+                    ctx.fillStyle = mc('#FFF3C8', '#FFB070', p, Math.max(0, a));
+                    ctx.fillRect(x - len / 2, y, len, 1 + f * 1.8);
+                }
+            }
+            // wave lines
+            ctx.lineWidth = 1.2;
+            for (let i = 0; i < 16; i++) {
+                const f = i / 16, y = hy + 8 + Math.pow(f, 1.7) * (h - hy - 10), amp = 1 + f * 7, fr = .012 - f * .006;
+                ctx.beginPath();
+                for (let x = 0; x <= w; x += 14) { const yy = y + Math.sin(x * fr * 3 + t * (.5 + f) + i * 2) * amp; x ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy) }
+                ctx.strokeStyle = mc('#FFFFFF', '#FFC9A8', p, .05 + f * .1); ctx.stroke();
+            }
+            // boats
+            const boatCol = mc('#F6EFE2', '#140F1C', Math.min(1, p * 1.25));
+            [[.18, .05, 1, 1], [.34, .12, 1.4, -1], [.46, .035, .7, 1], [.8, .09, 1.1, -1]].forEach(([fx, fy, s, d], i) => {
+                const bx = ((fx + t * .0035 * d * s) % 1.2 + 1.2) % 1.2 * w - w * .1, by = hy + (h - hy) * fy + Math.sin(t * 1.2 + i) * 2, sz = w * .022 * s;
+                ctx.fillStyle = boatCol;
+                ctx.beginPath(); ctx.moveTo(bx - sz, by); ctx.lineTo(bx + sz, by); ctx.lineTo(bx + sz * .7, by + sz * .4); ctx.lineTo(bx - sz * .7, by + sz * .4); ctx.fill();
+                ctx.beginPath(); ctx.moveTo(bx, by - sz * 2.2); ctx.lineTo(bx + sz * .9, by - sz * .1); ctx.lineTo(bx, by - sz * .1); ctx.fill();
+                ctx.beginPath(); ctx.moveTo(bx - sz * .1, by - sz * 1.6); ctx.lineTo(bx - sz * .8, by - sz * .1); ctx.lineTo(bx - sz * .1, by - sz * .1); ctx.fill();
+                ctx.fillStyle = mc('#FFFFFF', '#FFB070', p, .12 * (1 - p * .4)); ctx.fillRect(bx - sz, by + sz * .5, sz * 2, 2);
+            });
+            // shore + pier + house
+            const hw = Math.min(w * .3, 360), hx0 = w - hw - w * .05, base = h * .8;
+            ctx.fillStyle = mc('#E3CFA6', '#2A2230', Math.min(1, p * 1.1));
+            ctx.beginPath(); ctx.moveTo(w * .42, h); ctx.quadraticCurveTo(w * .58, h * .86, w * .78, h * .82); ctx.lineTo(w, h * .8); ctx.lineTo(w, h); ctx.fill();
+            const wood = mc('#9A6A3C', '#1C1424', p), wall = mc('#F1E4CE', '#2E2438', p), roof = mc('#8A5A36', '#150F1E', p);
+            ctx.fillStyle = wood; ctx.fillRect(hx0 - w * .34, base + hw * .05, w * .34 + hw * .1, 5);
+            for (let x = hx0 - w * .34; x < hx0; x += 26)ctx.fillRect(x, base + hw * .05, 3, 18);
+            ctx.fillStyle = wall; ctx.fillRect(hx0, base - hw * .4, hw, hw * .4);
+            ctx.fillRect(hx0 + hw * .12, base - hw * .66, hw * .55, hw * .27);
+            ctx.fillStyle = roof; ctx.fillRect(hx0 - hw * .03, base - hw * .42, hw * 1.06, hw * .035); ctx.fillRect(hx0 + hw * .09, base - hw * .68, hw * .61, hw * .03);
+            const lit = .25 + .75 * p;
+            if (p > .35) {
+                let wg = ctx.createRadialGradient(hx0 + hw * .5, base - hw * .2, 10, hx0 + hw * .5, base - hw * .2, hw * 1.1);
+                wg.addColorStop(0, `rgba(255,190,100,${.22 * lit})`); wg.addColorStop(1, 'rgba(255,190,100,0)'); ctx.fillStyle = wg; ctx.fillRect(hx0 - hw, base - hw * 1.3, hw * 3, hw * 2);
+            }
+            const glass = (x, y, ww, hh) => {
+                ctx.fillStyle = p > .35 ? `rgba(255,${190 + (1 - lit) * 30 | 0},${110 + (1 - lit) * 60 | 0},${.35 + .65 * lit})` : mc('#BFE3EE', '#BFE3EE', 0, .8); ctx.fillRect(x, y, ww, hh);
+                ctx.fillStyle = wood; ctx.fillRect(x + ww / 2 - 1, y, 2, hh)
+            };
+            for (let i = 0; i < 4; i++)glass(hx0 + hw * (.06 + i * .235), base - hw * .35, hw * .17, hw * .27);
+            for (let i = 0; i < 2; i++)glass(hx0 + hw * (.2 + i * .26), base - hw * .6, hw * .19, hw * .15);
+            ctx.fillStyle = wood; ctx.fillRect(hx0 - hw * .04, base - hw * .04, hw * 1.08, hw * .04);
+            for (let x = hx0 - hw * .04; x < hx0 + hw * 1.05; x += hw * .07)ctx.fillRect(x, base - hw * .11, 2, hw * .08);
+            // string lights
+            if (p > .45) {
+                for (let i = 0; i < 14; i++) {
+                    const x = hx0 - hw * .04 + i * hw * .08, y = base - hw * .44 + Math.sin(i / 13 * Math.PI) * 8;
+                    ctx.fillStyle = `rgba(255,226,150,${.5 + .5 * Math.sin(t * 2 + i) * .4})`; ctx.beginPath(); ctx.arc(x, y, 2.4, 0, 7); ctx.fill()
+                }
+            }
+        }
+        function mountScene(canvas, getP, opts = {}) {
+            const ctx = canvas.getContext('2d'); let w = 0, h = 0, vis = true, raf = 0, t0 = performance.now();
+            function size() { const d = Math.min(devicePixelRatio || 1, 2); w = canvas.clientWidth; h = canvas.clientHeight; canvas.width = w * d; canvas.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); frame(performance.now()) }
+            function frame(now) { drawScene(ctx, w, h, getP((now - t0) / 1000), (now - t0) / 1000) }
+            function loop(now) { if (vis && !reduce) { frame(now); raf = requestAnimationFrame(loop) } }
+            new ResizeObserver(size).observe(canvas);
+            new IntersectionObserver(e => { vis = e[0].isIntersecting; cancelAnimationFrame(raf); if (vis) raf = requestAnimationFrame(loop) }).observe(canvas);
+            return { redraw: () => frame(performance.now()) };
+        }
+        mountScene($('#heroCanvas'), t => .72 + .025 * Math.sin(t * .15));
+
+        /* sunset interaction */
+        let sunP = .62;
+        const sunCtl = mountScene($('#sunCanvas'), () => sunP);
+        const sunRange = $('#sunRange'), sunStage = $('#sunStage');
+        function labelFor(p) { return p < .25 ? ['MIDDAY', 'Bright sky, blue water. The terrace is quiet and the kitchen is warming up.'] : p < .55 ? ['AFTERNOON', 'The light turns soft. Tables fill up and the boats drift home.'] : p < .85 ? ['GOLDEN HOUR', 'Windows start to glow and the sea turns to copper. This is the table to book.'] : ['DUSK', 'Boats become silhouettes. Lanterns come on. Nobody wants to leave.'] }
+        function setSun(p) { sunP = Math.min(1, Math.max(0, p)); sunRange.value = Math.round(sunP * 100); const [b, l] = labelFor(sunP); $('#sunBadge').textContent = b; $('#sunLine').textContent = l; if (reduce) sunCtl.redraw() }
+        sunRange.addEventListener('input', () => setSun(sunRange.value / 100));
+        let drag = false;
+        const fromX = e => { const r = sunStage.getBoundingClientRect(); setSun((e.clientX - r.left) / r.width) };
+        sunStage.addEventListener('pointerdown', e => { drag = true; sunStage.setPointerCapture(e.pointerId); fromX(e) });
+        sunStage.addEventListener('pointermove', e => { if (drag) fromX(e) });
+        ['pointerup', 'pointercancel'].forEach(n => sunStage.addEventListener(n, () => drag = false));
+        setSun(.62);
+
+        /* ---------- navigation ---------- */
+        const header = $('header'), nav = $('#nav'), burger = $('#burger'), toplink = $('#toplink');
+        function setMenu(o) { nav.classList.toggle('open', o); header.classList.toggle('menu-open', o); burger.setAttribute('aria-expanded', o); document.body.style.overflow = o ? 'hidden' : '' }
+        burger.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+        $$('nav a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+        addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false) });
+        function onScroll() { const y = scrollY; header.classList.toggle('solid', y > 40 && !nav.classList.contains('open')); toplink.classList.toggle('show', y > 900) }
+        addEventListener('scroll', onScroll, { passive: true }); onScroll();
+        toplink.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
+        const links = Object.fromEntries($$('nav a').map(a => [a.getAttribute('href').slice(1), a]));
+        const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { $$('nav a.on').forEach(a => a.classList.remove('on')); links[e.target.id]?.classList.add('on') } }), { rootMargin: '-45% 0px -50% 0px' });
+        $$('main section').forEach(s => spy.observe(s));
+
+        /* ---------- world map ---------- */
+        const PLACES = [
+            { id: 'rest', n: 'MARÉ Restaurant', x: 500, y: 305, t: 'The warm heart of the coast: wood, glass and a terrace that leans over the water.', a: '#rest', b: 'SEE THE RESTAURANT' },
+            { id: 'pier', n: 'The Old Pier', x: 640, y: 352, t: 'Weathered planks, fishing lines and the last evening light. Walk to the end and watch the boats come in.', a: '#experiences', b: 'SEE EXPERIENCES' },
+            { id: 'harbour', n: 'Little Harbour', x: 632, y: 178, t: 'Painted boats, ropes and early coffee. Our fish arrives here every morning.', a: '#menu', b: 'SEE THE MENU' },
+            { id: 'surf', n: 'Surf Beach', x: 392, y: 442, t: 'Long, gentle waves and a lesson for every level. Salty hair is the dress code.', a: '#experiences', b: 'SEE EXPERIENCES' },
+            { id: 'light', n: 'Lighthouse Point', x: 572, y: 58, t: 'A short walk along the cliff, with the widest view of the bay.', a: '#sunset', b: 'WATCH THE SUNSET' },
+            { id: 'market', n: 'Fish Market', x: 455, y: 205, t: 'Stalls open at dawn. The chef walks here before the doors open at MARÉ.', a: '#menu', b: 'SEE THE MENU' },
+            { id: 'dune', n: 'Dune Garden', x: 250, y: 330, t: 'Grasses, herbs and shade. Part of our kitchen garden grows here.', a: '#spaces', b: 'FIND YOUR CORNER' },
+            { id: 'rocks', n: 'Sunset Rocks', x: 222, y: 500, t: 'Flat warm stones facing west. The quietest place for the last light of the day.', a: '#sunset', b: 'WATCH THE SUNSET' }
+        ];
+        (function () {
+            const boat = (x, y, s = 1, c = '#FBF6EC') => `<g class="boat" transform="translate(${x} ${y}) scale(${s})"><path d="M-14 0h28l-6 8h-16z" fill="#7A4B2A"/><path d="M0-22l11 20H0zM-2-17l-9 15h9z" fill="${c}"/><path d="M-14 10q14 4 28 0" stroke="#fff" stroke-opacity=".5" fill="none"/></g>`;
+            const house = (x, y, c, r) => `<g transform="translate(${x} ${y})"><rect width="26" height="18" rx="1.5" fill="${c}"/><path d="M-3 0L13-12 29 0z" fill="${r}"/><rect x="10" y="7" width="6" height="11" fill="#7A4B2A" opacity=".7"/></g>`;
+            const trees = [[110, 110], [150, 230], [300, 250], [330, 130], [200, 390], [90, 320], [260, 420], [420, 100], [380, 300], [60, 460]];
+            let s = `<svg viewBox="0 0 900 560" role="img" aria-label="Aerial map of the MARÉ coast" xmlns="http://www.w3.org/2000/svg"><defs>
+ <linearGradient id="wsea" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3FA4B5"/><stop offset=".5" stop-color="#2C7A8C"/><stop offset="1" stop-color="#14566B"/></linearGradient>
+ <linearGradient id="wsand" x1="0" x2="1"><stop offset="0" stop-color="#EAD8B2"/><stop offset="1" stop-color="#DFC795"/></linearGradient>
+ <filter id="wrough"><feTurbulence baseFrequency=".02" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter>
+ <filter id="wsoft"><feGaussianBlur stdDeviation="9"/></filter></defs>
+ <rect width="900" height="560" fill="url(#wsea)"/>
+ <g opacity=".22" fill="none" stroke="#fff" stroke-width="2">${[0, 1, 2, 3, 4, 5].map(i => `<path d="M${620 + i * 40} ${20 + i * 80}q40-12 80 0t80 0" />`).join('')}</g>`;
+            const coast = "M0 0L560 0C600 60 540 120 590 170C640 220 600 280 520 300C440 320 470 400 400 440C340 470 260 450 200 500L150 560L0 560Z";
+            s += `<path d="${coast}" fill="#8CD1D6" opacity=".55" transform="translate(16 6)" filter="url(#wsoft)"/>
+ <path d="${coast}" fill="none" stroke="#fff" stroke-width="7" opacity=".7" class="foam" transform="translate(7 3)"/>
+ <path d="${coast}" fill="url(#wsand)"/>
+ <path d="M0 0L440 0C470 70 420 140 470 190C510 230 470 280 410 300C340 320 360 380 300 410C240 435 180 430 110 470L80 560L0 560Z" fill="#9DB587" opacity=".9" filter="url(#wrough)"/>
+ <path d="M0 0L300 0C320 60 260 120 280 180C300 240 220 300 150 330C90 350 60 400 0 430Z" fill="#7F9D6E" opacity=".9" filter="url(#wrough)"/>
+ <path d="M60 250C200 200 300 215 470 235C520 245 540 280 505 305" fill="none" stroke="#F6EEDC" stroke-width="9" stroke-linecap="round"/>
+ <path d="M330 130C360 180 420 220 470 235" fill="none" stroke="#F6EEDC" stroke-width="6" stroke-linecap="round"/>
+ <path d="M200 390C260 340 340 310 410 308" fill="none" stroke="#F6EEDC" stroke-width="5" stroke-linecap="round" opacity=".9"/>`;
+            // houses
+            [[130, 160, '#F4E7D0', '#B5623F'], [165, 175, '#E9D6B6', '#8C4A2E'], [210, 150, '#F8EFDD', '#B5623F'], [250, 165, '#EFDDBD', '#9B5435'], [290, 200, '#F4E7D0', '#B5623F'], [180, 215, '#F8EFDD', '#8C4A2E'], [345, 240, '#EFDDBD', '#B5623F'], [400, 235, '#F4E7D0', '#9B5435'], [470, 185, '#F8EFDD', '#8C4A2E'], [430, 160, '#EFDDBD', '#B5623F']].forEach(h => s += house(...h));
+            trees.forEach(([x, y]) => s += `<circle cx="${x}" cy="${y}" r="${12 + (x % 9)}" fill="#5E7D4E" opacity=".85"/><circle cx="${x - 3}" cy="${y - 3}" r="7" fill="#7FA166" opacity=".8"/>`);
+            // pier
+            s += `<rect x="508" y="345" width="165" height="14" rx="2" fill="#A06E3F"/>${Array.from({ length: 11 }, (_, i) => `<rect x="${516 + i * 15}" y="343" width="2.5" height="18" fill="#6E4727"/>`).join('')}
+ <rect x="673" y="335" width="26" height="34" rx="3" fill="#A06E3F"/>`;
+            // harbour breakwater
+            s += `<path d="M598 190q60 4 112-24" stroke="#C9B79A" stroke-width="12" fill="none" stroke-linecap="round"/>`;
+            // lighthouse
+            s += `<g transform="translate(560 28)"><path d="M-9 0h18l-4 30h-10z" fill="#fff"/><path d="M-7 8h14l-1 6h-12z" fill="#C8553D"/><rect x="-8" y="-6" width="16" height="7" fill="#E9A93B"/><path d="M0 -14l9 8h-18z" fill="#C8553D"/></g>`;
+            // MARE house
+            s += `<g transform="translate(470 285)"><rect width="46" height="26" rx="2" fill="#F8EFDD"/><rect x="-4" y="-5" width="54" height="6" fill="#A06E3F"/><rect x="5" y="8" width="8" height="13" fill="#FFC969"/><rect x="19" y="8" width="8" height="13" fill="#FFC969"/><rect x="33" y="8" width="8" height="13" fill="#FFC969"/><rect x="38" y="24" width="30" height="9" fill="#B07C47"/></g>`;
+            // boats + surfers
+            s += boat(710, 120, 1.1) + boat(780, 250, .9, '#F6D9A8') + boat(690, 430, 1.2) + boat(580, 395, .8) + boat(560, 150, .8, '#E9A93B');
+            [[440, 462], [462, 480], [418, 478]].forEach(([x, y]) => s += `<g class="boat"><ellipse cx="${x}" cy="${y}" rx="11" ry="3.4" fill="#F2E7D0"/><circle cx="${x + 2}" cy="${y - 4}" r="3" fill="#2A2A33"/></g>`);
+            // rocks
+            [[195, 512, 16], [222, 520, 12], [170, 528, 10]].forEach(([x, y, r]) => s += `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * .7}" fill="#8B7B66"/><ellipse cx="${x - 3}" cy="${y - 3}" rx="${r * .5}" ry="${r * .3}" fill="#B3A58E"/>`);
+            PLACES.forEach((p, i) => { s += `<g class="hs" data-i="${i}" tabindex="0" role="button" aria-label="${p.n}"><circle class="pulse" cx="${p.x}" cy="${p.y}" r="14"/><circle class="dot" cx="${p.x}" cy="${p.y}" r="9"/><text class="lab" x="${p.x}" y="${p.y - 18}" text-anchor="middle">${p.n}</text></g>` });
+            $('#map').innerHTML = s + '</svg>';
+        })();
+        const card = $('#placeCard'), chips = $('#placeChips');
+        chips.innerHTML = PLACES.map((p, i) => `<button class="chip" data-i="${i}" aria-pressed="false">${p.n}</button>`).join('');
+        function showPlace(i, anim = true) {
+            const p = PLACES[i];
+            card.innerHTML = `<span class="tag">${String(i + 1).padStart(2, '0')} / ${String(PLACES.length).padStart(2, '0')}</span><h3>${p.n}</h3><p>${p.t}</p><a class="btn line" href="${p.a}">${p.b}</a>`;
+            if (anim) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap') }
+            $$('.hs').forEach(h => h.classList.toggle('on', +h.dataset.i === i));
+            $$('.chip', chips).forEach(c => c.setAttribute('aria-pressed', +c.dataset.i === i))
+        }
+        $$('.hs').forEach(h => { h.addEventListener('click', () => showPlace(+h.dataset.i)); h.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPlace(+h.dataset.i) } }) });
+        chips.addEventListener('click', e => { const c = e.target.closest('.chip'); if (c) showPlace(+c.dataset.i) });
+        showPlace(0, false);
+
+        /* ---------- restaurant illustration ---------- */
+        $('#restArt').innerHTML = `<svg viewBox="0 0 1000 524" preserveAspectRatio="xMidYMid slice" role="img" aria-label="MARÉ restaurant on the shore at golden hour" xmlns="http://www.w3.org/2000/svg"><defs>
+<linearGradient id="rsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A5FA0"/><stop offset=".5" stop-color="#E7A07F"/><stop offset="1" stop-color="#FFD28A"/></linearGradient>
+<linearGradient id="rsea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9B07C"/><stop offset=".3" stop-color="#5E7E94"/><stop offset="1" stop-color="#1B3A4F"/></linearGradient>
+<linearGradient id="rwall" x1="0" x2="1"><stop offset="0" stop-color="#F7EBD4"/><stop offset="1" stop-color="#E2CFAE"/></linearGradient>
+<linearGradient id="roak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C08A52"/><stop offset="1" stop-color="#8E5F34"/></linearGradient>
+<linearGradient id="rglass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD58A"/><stop offset="1" stop-color="#FF9F4F"/></linearGradient>
+<radialGradient id="rsun"><stop offset="0" stop-color="#FFF4C8"/><stop offset=".25" stop-color="#FFC66B" stop-opacity=".9"/><stop offset="1" stop-color="#FF9A5C" stop-opacity="0"/></radialGradient>
+<radialGradient id="rhalo"><stop offset="0" stop-color="#FFC66B" stop-opacity=".55"/><stop offset="1" stop-color="#FFC66B" stop-opacity="0"/></radialGradient>
+<filter id="rgrain"><feTurbulence baseFrequency=".9" numOctaves="2" result="n"/><feColorMatrix in="n" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .22 0"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>
+<rect width="1000" height="524" fill="url(#rsky)"/>
+<circle cx="300" cy="238" r="170" fill="url(#rsun)"/><circle cx="300" cy="248" r="26" fill="#FFF1C2"/>
+<path d="M0 262h1000v262H0z" fill="url(#rsea)"/>
+<g stroke="#FFE3A8" stroke-linecap="round">${Array.from({ length: 22 }, (_, i) => `<path d="M${300 - 30 - i * 3} ${272 + i * 7}h${60 + i * 6}" stroke-width="${1.5 + i * .12}" opacity="${.8 - i * .03}"/>`).join('')}</g>
+<g stroke="#fff" opacity=".18" fill="none">${Array.from({ length: 10 }, (_, i) => `<path d="M0 ${290 + i * 22}q60-8 120 0t120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0"/>`).join('')}</g>
+<g fill="#1A1420"><path d="M120 276l22-1 -4 8h-14z"/><path d="M131 252l9 22h-9z"/><path d="M700 292l26-1-5 9h-16z"/><path d="M712 262l11 28h-11z"/></g>
+<path d="M0 440C220 410 520 410 1000 430V524H0z" fill="#E4CDA2"/><path d="M0 478C300 460 700 466 1000 470V524H0z" fill="#CFB583"/>
+<ellipse cx="640" cy="400" rx="400" ry="150" fill="url(#rhalo)"/>
+<g>
+<rect x="470" y="404" width="520" height="30" fill="url(#roak)"/>
+${Array.from({ length: 30 }, (_, i) => `<path d="M${470 + i * 17.4} 404v30" stroke="#6E4727" opacity=".35"/>`).join('')}
+<rect x="500" y="250" width="460" height="154" fill="url(#rwall)"/>
+<rect x="540" y="168" width="290" height="86" fill="url(#rwall)"/>
+<rect x="486" y="236" width="488" height="16" fill="url(#roak)"/><rect x="526" y="156" width="318" height="14" fill="url(#roak)"/>
+<g class="wins">${[0, 1, 2, 3, 4].map(i => `<rect class="win" x="${522 + i * 88}" y="274" width="74" height="112" rx="2" fill="url(#rglass)"/><path class="win" d="M${559 + i * 88} 274v112M${522 + i * 88} 330h74" stroke="#8E5F34" stroke-width="3"/>`).join('')}
+${[0, 1, 2].map(i => `<rect class="win" x="${566 + i * 88}" y="186" width="68" height="50" rx="2" fill="url(#rglass)"/><path d="M${600 + i * 88} 186v50" stroke="#8E5F34" stroke-width="3"/>`).join('')}</g>
+<rect x="500" y="250" width="460" height="154" filter="url(#rgrain)"/>
+<rect x="640" y="138" width="86" height="22" rx="3" fill="#0F3B4C"/><text x="683" y="154" fill="#F4EBDC" font-family="Cormorant Garamond,serif" font-weight="600" font-size="16" letter-spacing="5" text-anchor="middle">MARÉ</text>
+<g fill="#6E4727">${Array.from({ length: 27 }, (_, i) => `<rect x="${472 + i * 19.2}" y="378" width="3" height="28"/>`).join('')}</g><rect x="470" y="376" width="520" height="5" fill="#A06E3F"/>
+${[[560, '#F6EBD3'], [700, '#F6EBD3'], [840, '#F6EBD3']].map(([x, c]) => `<g><ellipse cx="${x}" cy="398" rx="30" ry="6" fill="${c}"/><rect x="${x - 2}" y="398" width="4" height="22" fill="#6E4727"/><circle cx="${x}" cy="391" r="4" fill="#FFC969"/><circle cx="${x}" cy="391" r="12" fill="#FFC969" opacity=".25"/></g>`).join('')}
+<path d="M470 380Q620 408 770 380T990 380" stroke="#2A2230" stroke-width="1.2" fill="none" opacity=".6"/>
+${Array.from({ length: 18 }, (_, i) => `<circle cx="${480 + i * 29}" cy="${380 + Math.sin(i / 17 * Math.PI) * 22 + (i % 2)}" r="3" fill="#FFE29A"/><circle cx="${480 + i * 29}" cy="${380 + Math.sin(i / 17 * Math.PI) * 22 + (i % 2)}" r="8" fill="#FFE29A" opacity=".25"/>`).join('')}
+</g>
+<g fill="#6B8A58"><path d="M80 470c-20-40-5-70 18-78 5 30 10 50 -18 78z"/><path d="M110 480c10-45 40-60 60-52-6 30-30 50-60 52z"/></g>
+<g><path d="M420 480h50l-6 34h-38z" fill="#B5623F"/><path d="M445 480c-30-30-40-50-30-70 20 20 28 40 30 70zM445 480c26-30 40-45 38-70-24 16-34 40-38 70z" fill="#5E7D4E"/></g>
+<path d="M0 500L260 448 520 470 1000 450V524H0z" fill="#B99F73" opacity=".35"/>
+</svg>`;
+
+        /* ---------- food illustrations ---------- */
+        const rnd = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280 })();
+        function catchSVG() {
+            let mus = '';[[120, 200, -30], [104, 300, 20], [165, 392, 50], [370, 398, -20], [408, 150, 35], [250, 110, 10]].forEach(([x, y, r]) => {
+                mus += `<g transform="translate(${x} ${y}) rotate(${r})"><ellipse rx="40" ry="22" cy="4" fill="#000" opacity=".25" filter="url(#fb)"/>
+  <path d="M-38 0C-30-22 20-26 40 0C22 20-26 22-38 0z" fill="url(#mus)"/><path d="M-30-6C-10-18 14-16 30-4" stroke="#8FA3C2" stroke-width="2" fill="none" opacity=".6"/>
+  <path d="M-34 0C-20 14 12 16 34 0" stroke="#2E3A55" stroke-width="2" fill="none" opacity=".7"/>
+  <ellipse cx="8" cy="3" rx="22" ry="8" fill="url(#mflesh)" transform="rotate(-8)"/></g>`});
+            let carr = '';[[300, 128, 28], [330, 142, 34], [350, 170, 40]].forEach(([x, y, r]) => {
+                carr += `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M0 0C14-6 46-4 70 4C46 12 14 10 0 0z" fill="url(#car)"/><path d="M14-1l4 8M30-1l4 8M46 1l4 6" stroke="#5A2C0C" stroke-width="2.4" opacity=".7"/><path d="M0 0l-18-8M0 0l-20 2M0 0l-14 8" stroke="#6C9A3C" stroke-width="3.5" stroke-linecap="round"/></g>`
+            });
+            let leek = '';[[320, 330, -24], [352, 352, -30]].forEach(([x, y, r]) => { leek += `<g transform="translate(${x} ${y}) rotate(${r})"><rect width="82" height="15" rx="7" fill="#EAEFD0"/><rect x="54" width="28" height="15" rx="7" fill="#7FA24B"/><path d="M8 3h42M8 11h40" stroke="#3A2312" stroke-width="2.5" opacity=".55"/></g>` });
+            let fen = ''; for (let i = 0; i < 22; i++) {
+                const a = rnd() * 6.28, d = rnd() * 60, x = 250 + Math.cos(a) * d * 1.2, y = 235 + Math.sin(a) * d * .8;
+                fen += `<path d="M${x} ${y}q${(rnd() - .5) * 30} ${-18 - rnd() * 16} ${(rnd() - .5) * 50} ${-30 - rnd() * 14}" stroke="${i % 3 ? '#6E9A3C' : '#9CC35A'}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`
+            }
+            return `<svg viewBox="0 0 520 520" role="img" aria-label="Maré Catch: pan-roasted sea bream with saffron sauce, mussels, baby vegetables and fennel" xmlns="http://www.w3.org/2000/svg"><defs>
+ <radialGradient id="rim" cx=".4" cy=".35"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F2EADB"/><stop offset="1" stop-color="#CDBFA6"/></radialGradient>
+ <radialGradient id="well" cx=".5" cy=".5"><stop offset=".7" stop-color="#F7F1E4"/><stop offset="1" stop-color="#E4D8C2"/></radialGradient>
+ <radialGradient id="sauce" cx=".45" cy=".4"><stop offset="0" stop-color="#FAD56A"/><stop offset=".55" stop-color="#EDAB36"/><stop offset="1" stop-color="#D2831E"/></radialGradient>
+ <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0B35E"/><stop offset=".4" stop-color="#C77A32"/><stop offset="1" stop-color="#8A4519"/></linearGradient>
+ <linearGradient id="flesh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF9EE"/><stop offset="1" stop-color="#F0E1C8"/></linearGradient>
+ <linearGradient id="mus" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A4766"/><stop offset=".5" stop-color="#1C2438"/><stop offset="1" stop-color="#0C111C"/></linearGradient>
+ <radialGradient id="mflesh"><stop offset="0" stop-color="#FFC27A"/><stop offset="1" stop-color="#E9873A"/></radialGradient>
+ <linearGradient id="car" x1="0" x2="1"><stop offset="0" stop-color="#F4912F"/><stop offset="1" stop-color="#C95E14"/></linearGradient>
+ <pattern id="scales" width="16" height="12" patternUnits="userSpaceOnUse"><path d="M0 12q8-14 16 0M-8 6q8-14 16 0M8 6q8-14 16 0" fill="none" stroke="#5A2A0C" stroke-width="1.6" opacity=".45"/></pattern>
+ <filter id="fb"><feGaussianBlur stdDeviation="6"/></filter><filter id="fs"><feGaussianBlur stdDeviation="2"/></filter>
+ <filter id="rough"><feTurbulence baseFrequency=".03" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="12"/></filter>
+ <filter id="tex"><feTurbulence baseFrequency=".85" numOctaves="2" result="n"/><feColorMatrix in="n" values="0 0 0 0 .1 0 0 0 0 .05 0 0 0 0 0 0 0 0 .55 0" result="na"/><feComposite in="na" in2="SourceAlpha" operator="in" result="nc"/><feBlend in="SourceGraphic" in2="nc" mode="multiply"/></filter></defs>
+ <ellipse cx="268" cy="282" rx="238" ry="232" fill="#000" opacity=".28" filter="url(#fb)"/>
+ <circle cx="260" cy="260" r="236" fill="url(#rim)"/><circle cx="260" cy="260" r="236" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+ <circle cx="260" cy="260" r="176" fill="url(#well)"/><circle cx="260" cy="260" r="176" fill="none" stroke="#C9BBA2" stroke-width="2" opacity=".6"/>
+ <path d="M130 230C130 150 250 120 340 150C420 180 430 280 390 340C340 410 210 410 150 340C130 315 130 260 130 230z" fill="url(#sauce)" filter="url(#rough)"/>
+ <path d="M160 170C220 120 330 120 390 160" stroke="#FFF1B8" stroke-width="5" fill="none" opacity=".55" filter="url(#fs)"/>
+ ${mus}${carr}${leek}
+ <g transform="rotate(-14 260 250)"><ellipse cx="262" cy="292" rx="150" ry="62" fill="#000" opacity=".3" filter="url(#fb)"/>
+ <path d="M118 250C118 196 200 176 290 184C380 192 410 236 392 276C370 324 240 336 170 312C136 300 118 280 118 250z" fill="url(#flesh)"/>
+ <path d="M118 250C118 196 200 176 290 184C380 192 410 236 392 276C370 324 240 336 170 312C136 300 118 280 118 250z" fill="url(#skin)" transform="translate(6 -8) scale(.97)" filter="url(#tex)"/>
+ <path d="M126 246C126 200 206 184 288 192C372 200 398 236 384 270C364 314 244 322 176 302C142 292 126 274 126 246z" fill="url(#scales)" opacity=".8"/>
+ <path d="M150 230C190 206 280 200 350 214" stroke="#FFE2A0" stroke-width="7" fill="none" opacity=".65" filter="url(#fs)"/>
+ <path d="M170 280C230 300 320 296 370 262" stroke="#4A1F08" stroke-width="5" fill="none" opacity=".4" filter="url(#fs)"/>
+ ${Array.from({ length: 16 }, () => `<ellipse cx="${150 + rnd() * 220}" cy="${210 + rnd() * 90}" rx="${3 + rnd() * 7}" ry="${2 + rnd() * 3}" fill="#3A1A08" opacity="${.25 + rnd() * .35}"/>`).join('')}
+ ${Array.from({ length: 26 }, () => `<rect x="${140 + rnd() * 240}" y="${205 + rnd() * 90}" width="2.6" height="2.6" fill="#fff" opacity=".85" transform="rotate(${rnd() * 90})"/>`).join('')}
+ </g>
+ <g>${fen}</g>
+ ${Array.from({ length: 24 }, () => `<circle cx="${130 + rnd() * 270}" cy="${130 + rnd() * 270}" r="${1.4 + rnd() * 2}" fill="${rnd() > .5 ? '#F4D26B' : '#7DA24A'}" opacity=".9"/>`).join('')}
+ <g fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" filter="url(#fb)">
+  <path class="steam" d="M230 170q-14-22 0-44t0-40"/><path class="steam" d="M270 160q16-24 0-46t4-40"/><path class="steam" d="M310 172q-12-20 2-38t-2-34"/></g>
+ </svg>`}
+        function tideSVG() {
+            const rasp = (x, y, s = 1) => { let c = '';[[0, 0], [-7, 5], [7, 5], [-3, -7], [4, -7], [-8, -3], [8, -3], [0, 10], [-5, 10], [5, 10]].forEach(([dx, dy]) => c += `<circle cx="${dx * s}" cy="${dy * s}" r="${6.4 * s}" fill="url(#rb)"/><circle cx="${dx * s - 2}" cy="${dy * s - 2}" r="${1.8 * s}" fill="#fff" opacity=".6"/>`); return `<g transform="translate(${x} ${y})">${c}</g>` };
+            const blue = (x, y) => `<g transform="translate(${x} ${y})"><circle r="13" fill="url(#bb)"/><circle r="13" fill="none" stroke="#C7D2F0" stroke-width="2" opacity=".3"/><path d="M0-3l3 2-1 4h-4l-1-4z" fill="#10163A"/><ellipse cx="-4" cy="-5" rx="4" ry="2.4" fill="#fff" opacity=".5"/></g>`;
+            const blk = (x, y) => { let c = '';[[0, 0], [-6, 5], [6, 5], [0, -6], [-6, -3], [6, -3]].forEach(([dx, dy]) => c += `<circle cx="${dx}" cy="${dy}" r="6.4" fill="#2B1636"/><circle cx="${dx - 2}" cy="${dy - 2}" r="1.6" fill="#B58BD0" opacity=".8"/>`); return `<g transform="translate(${x} ${y}) scale(1.2)">${c}</g>` };
+            const seg = (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-34 0C-28 -30 28 -30 34 0C20 14 -20 14 -34 0z" fill="url(#cit)"/><path d="M-26 -2C-20 -20 20 -20 26 -2" fill="none" stroke="#FFD58A" stroke-width="2" opacity=".6"/><path d="M-18 -2l10 8M0 -8v16M18 -2l-10 8" stroke="#FFE4B0" stroke-width="1.6" opacity=".7"/><path d="M-24 -8Q0 -22 24 -8" stroke="#fff" stroke-width="3" fill="none" opacity=".5"/></g>`;
+            return `<svg viewBox="0 0 520 520" role="img" aria-label="Sunset Tide: vanilla panna cotta with citrus, berries, caramel shard and white chocolate" xmlns="http://www.w3.org/2000/svg"><defs>
+ <radialGradient id="p2rim" cx=".4" cy=".35"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#F2EADB"/><stop offset="1" stop-color="#CDBFA6"/></radialGradient>
+ <radialGradient id="dome" cx=".38" cy=".3"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#FBF1DA"/><stop offset="1" stop-color="#E6D3AC"/></radialGradient>
+ <radialGradient id="rb" cx=".35" cy=".3"><stop offset="0" stop-color="#F0506B"/><stop offset="1" stop-color="#9C1230"/></radialGradient>
+ <radialGradient id="bb" cx=".35" cy=".3"><stop offset="0" stop-color="#6F7FC6"/><stop offset="1" stop-color="#1C2257"/></radialGradient>
+ <linearGradient id="cit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC15A"/><stop offset="1" stop-color="#FF8A1F"/></linearGradient>
+ <linearGradient id="cara" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBC459"/><stop offset=".5" stop-color="#D98122"/><stop offset="1" stop-color="#A8530F"/></linearGradient>
+ <radialGradient id="cou" cx=".5" cy=".5"><stop offset="0" stop-color="#C5254A"/><stop offset="1" stop-color="#7D0F2B"/></radialGradient>
+ <filter id="b2"><feGaussianBlur stdDeviation="6"/></filter><filter id="s2"><feGaussianBlur stdDeviation="1.6"/></filter>
+ <filter id="r2"><feTurbulence baseFrequency=".03" numOctaves="3" seed="3"/><feDisplacementMap in="SourceGraphic" scale="16"/></filter></defs>
+ <ellipse cx="268" cy="282" rx="238" ry="232" fill="#000" opacity=".28" filter="url(#b2)"/>
+ <circle cx="260" cy="260" r="236" fill="url(#p2rim)"/><circle cx="260" cy="260" r="236" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+ <circle cx="260" cy="260" r="170" fill="#F7F1E4"/><circle cx="260" cy="260" r="170" fill="none" stroke="#C9BBA2" stroke-width="2" opacity=".6"/>
+ <path d="M120 300C100 220 170 150 250 150C340 150 420 210 400 300C380 380 200 400 120 300z" fill="url(#cou)" filter="url(#r2)" opacity=".92"/>
+ <path d="M150 190Q250 140 360 190" stroke="#FF8FA6" stroke-width="5" fill="none" opacity=".5" filter="url(#s2)"/>
+ <ellipse cx="262" cy="296" rx="100" ry="30" fill="#000" opacity=".35" filter="url(#b2)"/>
+ <circle cx="258" cy="252" r="98" fill="url(#dome)"/>
+ <path d="M162 252A98 98 0 0 1 258 154A98 98 0 0 1 356 252C330 214 290 196 258 196C220 196 186 214 162 252z" fill="#fff" opacity=".96"/>
+ <path d="M178 224C206 186 250 172 296 180" stroke="#fff" stroke-width="12" fill="none" opacity=".9" filter="url(#s2)"/>
+ <path d="M170 250C180 280 200 322 258 334C316 334 348 290 354 252" fill="none" stroke="#E6D3AC" stroke-width="3" opacity=".7"/>
+ ${Array.from({ length: 60 }, () => { const a = rnd() * 6.28, d = Math.sqrt(rnd()) * 88; return `<circle cx="${258 + Math.cos(a) * d}" cy="${252 + Math.sin(a) * d * .9}" r="${.8 + rnd() * 1.1}" fill="#3A2412" opacity="${.5 + rnd() * .4}"/>` }).join('')}
+ ${seg(150, 372, 24)}${seg(190, 420, -10)}${seg(360, 392, -40)}${seg(120, 150, -60)}
+ <g transform="translate(330 118) rotate(24)"><path d="M0 0l78-22 28 32-26 34-56-8z" fill="url(#cara)"/><path d="M10 4l60-16 18 20" stroke="#FFF1B8" stroke-width="4" fill="none" opacity=".75"/><path d="M12 24l50 8" stroke="#7A3A08" stroke-width="3" opacity=".4"/></g>
+ ${rasp(236, 164, 1.1)}${rasp(292, 172, .9)}${blue(210, 196)}${blue(330, 214)}${blue(318, 188)}${blk(268, 138)}${rasp(180, 310, 1)}${blue(344, 320)}${blk(222, 340)}
+ ${Array.from({ length: 46 }, () => `<rect x="${110 + rnd() * 300}" y="${120 + rnd() * 300}" width="${2 + rnd() * 2.4}" height="${2 + rnd() * 2.4}" fill="#fff" opacity=".9" transform="rotate(${rnd() * 90})"/>`).join('')}
+ </svg>`}
+        $('#catchArt').innerHTML = catchSVG(); $('#tideArt').innerHTML = tideSVG();
+
+        /* ---------- menu tabs ---------- */
+        const MENU = {
+            'STARTERS': [['Saffron Fish Soup', 'Rouille toast, fennel fronds, olive oil', '14'], ['Charred Octopus', 'Smoked paprika potatoes, lemon, parsley', '19'], ['Burrata & Peach', 'Basil oil, toasted almonds, sea salt', '15'], ['Oysters, Half Dozen', 'Shallot vinegar, lemon, brown bread', '24']],
+            'FROM THE SEA': [['Maré Catch', 'Sea bream, saffron beurre blanc, mussels, baby vegetables', '34'], ['Lobster Linguine', 'Tomato, chilli, garlic, white wine', '38'], ['Grilled Prawns', 'Garlic butter, charred lemon, herb salad', '29'], ['Fisherman\'s Stew', 'Catch of the day, saffron broth, grilled bread', '31']],
+            'FROM THE LAND': [['Roast Chicken', 'Lemon, thyme, crisp potatoes, pan juices', '26'], ['Herb Garden Risotto', 'Peas, courgette flower, parmesan', '22'], ['Slow Lamb Shoulder', 'White beans, rosemary, salsa verde', '33'], ['Wood-Fired Flatbread', 'Ricotta, honey, chilli, rocket', '16']],
+            'DESSERTS': [['Sunset Tide', 'Vanilla panna cotta, citrus, berries, caramel shard', '12'], ['Olive Oil Cake', 'Orange blossom cream, pistachio', '10'], ['Lemon Tart', 'Torched meringue, sea salt', '11'], ['Gelato by the Scoop', 'Vanilla, pistachio, salted caramel, sorbet', '4']],
+            'DRINKS': [['Golden Hour Spritz', 'Saffron aperitivo, prosecco, orange', '13'], ['Sea Breeze', 'Gin, grapefruit, rosemary, tonic', '14'], ['Coast Lemonade', 'Lemon, mint, sparkling water', '6'], ['Local White Wine', 'Glass of the house selection', '9']]
+        };
+        const mtabs = $('#mtabs'), mlist = $('#mlist');
+        mtabs.innerHTML = Object.keys(MENU).map((k, i) => `<button class="mtab" role="tab" aria-selected="${i === 0}" data-k="${k}">${k}</button>`).join('');
+        function showMenu(k) {
+            $$('.mtab').forEach(b => b.setAttribute('aria-selected', b.dataset.k === k));
+            mlist.innerHTML = MENU[k].map(([n, d, p]) => `<div class="mitem"><div class="row"><b>${n}</b><span class="dots"></span><span class="pr">$${p}</span></div><p>${d}</p></div>`).join('');
+            mlist.classList.remove('swap'); void mlist.offsetWidth; mlist.classList.add('swap')
+        }
+        mtabs.addEventListener('click', e => { const b = e.target.closest('.mtab'); if (b) showMenu(b.dataset.k) });
+        showMenu('STARTERS');
+
+        /* ---------- experiences ---------- */
+        const ico = {
+            sun: '<circle cx="100" cy="82" r="22" fill="#FFE9A8"/><path d="M0 100h200v50H0z" fill="#2C7A8C"/><path d="M60 112h80M76 124h48" stroke="#FFE9A8" stroke-width="3" opacity=".7"/>',
+            fish: '<path d="M50 80c30-30 70-30 94 0-24 30-64 30-94 0z" fill="#F4EBDC"/><path d="M144 80l24-16v32z" fill="#F4EBDC"/><circle cx="76" cy="76" r="4" fill="#0F3B4C"/><path d="M20 130h160" stroke="#fff" opacity=".4" stroke-width="3"/>',
+            wave: '<path d="M0 100q25-40 50-10t50-20 50 10 50-20v90H0z" fill="#F4EBDC" opacity=".9"/><path d="M0 120q25-24 50-4t50-14 50 6 50-12v54H0z" fill="#2C7A8C"/>',
+            boat: '<path d="M100 28l40 60h-40zM92 40L62 88h30z" fill="#F4EBDC"/><path d="M50 96h100l-16 24H66z" fill="#B07C47"/><path d="M0 130q25-8 50 0t50 0 50 0 50 0v30H0z" fill="#2C7A8C" opacity=".8"/>',
+            basket: '<path d="M54 80h92l-10 50H64z" fill="#B07C47"/><path d="M64 80c0-40 72-40 72 0" stroke="#8E5F34" stroke-width="6" fill="none"/><circle cx="84" cy="74" r="12" fill="#E9825A"/><circle cx="112" cy="72" r="12" fill="#7FA24B"/><circle cx="98" cy="62" r="11" fill="#E9A93B"/>',
+            glass: '<path d="M70 42h60l-8 50q-22 12-44 0z" fill="#FFD58A" opacity=".9"/><path d="M100 94v38M80 134h40" stroke="#F4EBDC" stroke-width="5" stroke-linecap="round"/><circle cx="118" cy="52" r="14" fill="#E9825A"/>',
+            yoga: '<circle cx="100" cy="52" r="14" fill="#F4EBDC"/><path d="M100 68v36M100 80l-34 22M100 80l34 22M100 104l-26 22M100 104l26 22" stroke="#F4EBDC" stroke-width="8" stroke-linecap="round" fill="none"/><path d="M20 140h160" stroke="#E9A93B" stroke-width="5" opacity=".8"/>',
+            castle: '<path d="M54 130V84h20V70h12v14h28V70h12v14h20v46z" fill="#E9D3A5"/><path d="M92 130v-22a8 8 0 0116 0v22z" fill="#B58D55"/><path d="M0 130h200v30H0z" fill="#D9BE8C"/>'
+        };
+        const XP = [
+            ['Sunrise Swim', 'Cold, clear water and a coffee waiting on the sand.', 'sun', '#F0A870', '#E9825A'],
+            ['Pier Fishing', 'Borrow a rod. We will cook whatever you catch.', 'fish', '#2C7A8C', '#14566B'],
+            ['Surf Lessons', 'Gentle waves, friendly teachers, all levels.', 'wave', '#3FA4B5', '#14566B'],
+            ['Golden Hour Boat Trip', 'An hour on the water while the sky changes colour.', 'boat', '#F3B98C', '#C95A7C'],
+            ['Market Morning', 'Walk the fish market with our chef, then eat breakfast.', 'basket', '#9DB587', '#5E7D4E'],
+            ['Sunset Aperitivo', 'Saffron spritz and small plates on the terrace.', 'glass', '#E9825A', '#7A3A56'],
+            ['Beach Yoga', 'Slow stretching on the sand before the day begins.', 'yoga', '#6C8FC2', '#2F2B5E'],
+            ['Sandcastle Club', 'Buckets, spades and a prize for the tallest tower.', 'castle', '#E7C98A', '#B07C47']
+        ];
+        $('#xgrid').innerHTML = XP.map(([n, d, i, c1, c2], k) => `<button class="xcard" aria-pressed="false" data-n="${n}"><div class="ic"><svg viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="xg${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="200" height="160" fill="url(#xg${k})"/>${ico[i]}</svg></div><h3>${n}</h3><span>${d}</span><em>ADD TO MY VISIT</em></button>`).join('');
+
+        /* ---------- spaces ---------- */
+        const SP = [
+            ['The Terrace', 'Open air, over the water. Best at golden hour.', ['#FFC48A', '#E9825A', '#2C7A8C'], 'terr'],
+            ['The Dining Room', 'Oak, linen and warm light, with windows to the waves.', ['#FBE4B5', '#E9C58E', '#B07C47'], 'room'],
+            ['The Window Bar', 'Stools along the glass. Ideal for two.', ['#BFE3EE', '#8CC6E4', '#2C7A8C'], 'bar'],
+            ['The Garden Corner', 'Herbs, shade and a table under the leaves.', ['#CFE0B0', '#9DB587', '#5E7D4E'], 'garden'],
+            ['The Pier Table', 'One long table at the end of the pier.', ['#F3B98C', '#C95A7C', '#2F2B5E'], 'pier'],
+            ['The Sandy Alcove', 'Low seats and lanterns, steps from the beach.', ['#F6DDA8', '#E3C894', '#14566B'], 'alcove']
+        ];
+        const spArt = (k, [a, b, c], i) => {
+            const base = `<defs><linearGradient id="sg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="300" fill="url(#sg${i})"/><circle cx="290" cy="110" r="28" fill="#FFF3C4" opacity=".9"/><rect y="150" width="400" height="150" fill="${c}"/><path d="M0 160q50-8 100 0t100 0 100 0 100 0" stroke="#fff" opacity=".35" fill="none"/>`;
+            const t = (x, y) => `<ellipse cx="${x}" cy="${y}" rx="44" ry="10" fill="#F6EBD3"/><rect x="${x - 3}" y="${y}" width="6" height="40" fill="#6E4727"/><circle cx="${x}" cy="${y - 8}" r="5" fill="#FFC969"/>`;
+            const ex = {
+                terr: `<rect y="230" width="400" height="70" fill="#A06E3F"/>${t(120, 214)}${t(280, 224)}<path d="M0 214h400" stroke="#6E4727" stroke-width="4"/>`,
+                room: `<rect x="30" y="40" width="340" height="190" fill="#F7EBD4"/><rect x="50" y="60" width="300" height="130" fill="url(#sg${i})"/><path d="M200 60v130M50 125h300" stroke="#8E5F34" stroke-width="5"/><rect y="230" width="400" height="70" fill="#B07C47"/>${t(130, 214)}${t(270, 214)}`,
+                bar: `<rect x="20" y="40" width="360" height="130" fill="url(#sg${i})" stroke="#8E5F34" stroke-width="6"/><rect x="0" y="190" width="400" height="22" fill="#A06E3F"/>${[80, 160, 240, 320].map(x => `<rect x="${x}" y="212" width="5" height="60" fill="#6E4727"/><ellipse cx="${x + 2}" cy="212" rx="18" ry="6" fill="#E9825A"/>`).join('')}`,
+                garden: `<rect y="230" width="400" height="70" fill="#7F9D6E"/>${[60, 150, 250, 340].map(x => `<circle cx="${x}" cy="${150 + (x % 3) * 10}" r="46" fill="#5E7D4E"/><circle cx="${x - 10}" cy="${140 + (x % 3) * 10}" r="26" fill="#7FA166"/>`).join('')}${t(200, 220)}`,
+                pier: `<rect y="190" width="400" height="26" fill="#A06E3F"/>${Array.from({ length: 14 }, (_, k) => `<rect x="${k * 30 + 8}" y="216" width="5" height="50" fill="#6E4727"/>`).join('')}<ellipse cx="200" cy="184" rx="130" ry="10" fill="#F6EBD3"/><circle cx="90" cy="172" r="6" fill="#FFC969"/><circle cx="200" cy="172" r="6" fill="#FFC969"/><circle cx="310" cy="172" r="6" fill="#FFC969"/>`,
+                alcove: `<rect y="210" width="400" height="90" fill="#E3C894"/><path d="M60 210q140-110 280 0z" fill="#F6EBD3"/><path d="M90 210q110-80 220 0z" fill="#E9825A" opacity=".8"/>${[120, 200, 280].map(x => `<circle cx="${x}" cy="228" r="9" fill="#FFC969"/><circle cx="${x}" cy="228" r="22" fill="#FFC969" opacity=".25"/>`).join('')}`
+            };
+            return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${base}${ex[k]}</svg>`
+        };
+        $('#sgrid').innerHTML = SP.map(([n, d, c, k], i) => `<button class="scard" aria-pressed="false" data-n="${n}"><div class="pic">${spArt(k, c, i)}</div><div class="txt"><h3>${n}</h3><p>${d}</p><span class="pick">CHOOSE THIS SPACE</span></div></button>`).join('');
+
+        /* ---------- reservation ---------- */
+        const sel = { exp: null, space: null };
+        function toggleSel(grid, key, btn) {
+            const on = btn.getAttribute('aria-pressed') === 'true'; $$('[aria-pressed]', grid).forEach(b => b.setAttribute('aria-pressed', 'false')); if (!on) { btn.setAttribute('aria-pressed', 'true'); sel[key] = btn.dataset.n } else sel[key] = null; renderPre();
+            if (!on) toast(key)
+        }
+        function toast() { const pre = $('#pre'); pre.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.04)' }, { transform: 'scale(1)' }], { duration: 400 }) }
+        $('#xgrid').addEventListener('click', e => { const b = e.target.closest('.xcard'); if (b) toggleSel($('#xgrid'), 'exp', b) });
+        $('#sgrid').addEventListener('click', e => { const b = e.target.closest('.scard'); if (b) toggleSel($('#sgrid'), 'space', b) });
+        function renderPre() {
+            const items = [['space', sel.space], ['exp', sel.exp]].filter(x => x[1]);
+            $('#pre').innerHTML = items.length ? `<span>Your choices:</span>` + items.map(([k, v]) => `<button type="button" class="chip" data-k="${k}">${v} <span aria-hidden="true">×</span><span class="sr" style="position:absolute;left:-9999px">remove</span></button>`).join('') : ''
+        }
+        $('#pre').addEventListener('click', e => { const c = e.target.closest('.chip'); if (!c) return; const k = c.dataset.k; sel[k] = null; $$(k === 'exp' ? '.xcard' : '.scard').forEach(b => b.setAttribute('aria-pressed', 'false')); renderPre() });
+        const rDate = $('#rDate'), rTime = $('#rTime'), rGuests = $('#rGuests');
+        const pad = n => String(n).padStart(2, '0');
+        const today = new Date(); rDate.min = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+        rGuests.innerHTML = Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}"${i === 1 ? ' selected' : ''}>${i + 1}</option>`).join('') + '<option value="11+">11+</option>';
+        function fillTimes() {
+            const v = rDate.value, d = v ? new Date(v + 'T12:00:00').getDay() : 1, wk = d === 0 || d === 6, start = wk ? 9 : 12;
+            const cur = rTime.value; let o = '<option value="">Select time</option>';
+            for (let m = start * 60; m <= 22 * 60; m += 30) { const t = `${pad(m / 60 | 0)}:${pad(m % 60)}`; o += `<option value="${t}">${t}${wk && m < 12 * 60 ? ' · brunch' : ''}</option>` }
+            rTime.innerHTML = o; if ([...rTime.options].some(x => x.value === cur)) rTime.value = cur
+        }
+        rDate.addEventListener('change', fillTimes); fillTimes();
+        const rules = [['rDate', 'eDate', 'Pick a date.'], ['rTime', 'eTime', 'Pick a time.'], ['rName', 'eName', 'Enter your name.'], ['rContact', 'eContact', 'Enter a phone number or email.']];
+        function check() {
+            let ok = true; rules.forEach(([id, eid, msg]) => {
+                const el = $('#' + id); let bad = !el.value.trim();
+                if (id === 'rContact' && !bad) bad = !(/^\S+@\S+\.\S+$/.test(el.value.trim()) || /^[+\d][\d\s().-]{6,}$/.test(el.value.trim()));
+                if (id === 'rContact' && bad && el.value.trim()) $('#' + eid).textContent = 'Use a valid phone number or email.'; else $('#' + eid).textContent = bad ? msg : '';
+                el.closest('.f').classList.toggle('bad', bad); if (bad) ok = false
+            }); return ok
+        }
+        $$('#rform input,#rform select').forEach(el => el.addEventListener('input', () => { if (el.closest('.f').classList.contains('bad')) check() }));
+        $('#rform').addEventListener('submit', e => {
+            e.preventDefault(); if (!check()) { $('#rform .bad input,#rform .bad select')?.focus(); return }
+            const dt = new Date(rDate.value + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const rows = [['DATE', dt], ['TIME', rTime.value], ['GUESTS', rGuests.value], ['NAME', $('#rName').value.trim()], ['CONTACT', $('#rContact').value.trim()]];
+            if (sel.space) rows.push(['SPACE', sel.space]); if (sel.exp) rows.push(['EXPERIENCE', sel.exp]);
+            const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+            $('#doneList').innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${esc(String(v))}</dd>`).join('');
+            $('#rform').hidden = true; const d = $('#done'); d.classList.add('show'); d.focus(); d.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' })
+        });
+        $('#again').addEventListener('click', () => { $('#rform').hidden = false; $('#done').classList.remove('show'); $('#rform').reset(); fillTimes(); $('#rDate').focus() });
+    </script>
+</body>
+
+</html>
